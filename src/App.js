@@ -1,26 +1,43 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Route, Switch } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
+
+import logo from './Assets/logo.png';
 import './App.css';
+import Plan from './Plan';
+import Data from './Data/data.js';
+import Form from './Form';
+
+const plans = [];
+
+for (let plan in Data) {
+  let planOption = Data[plan];
+  plans.push(
+    <Plan
+      key={plan}
+      name={planOption.name}
+      price={planOption.price}
+      credits={planOption.credits}
+    />
+  )
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <HashRouter>
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+        </header>
+        {plans}
+        <Switch>
+          <Route path="/forms/:formId" component={Form} />
+        </Switch>
+      </div>
+    </HashRouter>
   );
 }
 
 export default App;
+
+
